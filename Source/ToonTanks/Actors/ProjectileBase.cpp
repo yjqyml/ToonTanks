@@ -14,7 +14,7 @@ AProjectileBase::AProjectileBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	ProjectileMesh->OnComponentHit.AddDynamic(this,&AProjectileBase::OnHit);
+	
 	RootComponent = ProjectileMesh;
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
@@ -28,13 +28,13 @@ AProjectileBase::AProjectileBase()
 void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	ProjectileMesh->OnComponentHit.AddDynamic(this,&AProjectileBase::OnHit);
 }
 
 
 void AProjectileBase::OnHit(UPrimitiveComponent* HitComp,AActor* OtherActor,UPrimitiveComponent* OtherComp, FVector NormalImpulse,const FHitResult& Hit) 
 {
-	UE_LOG(LogTemp,Warning,TEXT("dfs"));
+	
 	AActor* MyOwner = GetOwner();
 
 	if( !MyOwner )
@@ -44,8 +44,15 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComp,AActor* OtherActor,UPri
 
 	if( OtherActor && OtherActor != this && OtherActor != MyOwner)
 	{
+		UE_LOG(LogTemp,Warning,TEXT("dfs"));
 		UGameplayStatics::ApplyDamage(OtherActor ,Damage, MyOwner->GetInstigatorController(),this,DamageType);
 	}
 
 	Destroy();
+}
+
+void AProjectileBase::LaunchProjectile(FVector Speed) 
+{
+	ProjectileMovement->SetVelocityInLocalSpace(Speed);
+	ProjectileMovement->Activate();    //可以飞行了
 }

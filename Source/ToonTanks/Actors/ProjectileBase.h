@@ -26,6 +26,9 @@ private:
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp,AActor* OtherActor,UPrimitiveComponent* OtherComp, FVector NormalImpulse,const FHitResult& Hit);
+
+	UFUNCTION(BlueprintCallable, Category = "Projectile_Fun")
+ 	void LaunchProjectile(FVector Speed);
 	
 public:	
 	// Sets default values for this actor's properties

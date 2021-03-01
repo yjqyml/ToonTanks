@@ -25,6 +25,11 @@ APawnBase::APawnBase()
 
 }
 
+void APawnBase::PawnDestroyed() 
+{
+	
+}
+
 void APawnBase::RotateTurretFunction(FVector LookAtTarget) 
 {
 	// Update TurretMesh rotation to face towards the LookAtTarget passed in from Child Classes.
