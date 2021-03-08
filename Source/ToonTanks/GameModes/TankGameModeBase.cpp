@@ -44,6 +44,8 @@ void ATankGameModeBase::HandleGameStart()
     PlayerTank = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this,0));
     //  Call Blueprint version GameStart();
     GameStart();
+
+    
 }
 
 void ATankGameModeBase::HandleGameOver(bool PlayerWon) 
